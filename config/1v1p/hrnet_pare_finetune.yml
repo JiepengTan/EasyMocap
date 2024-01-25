@@ -136,12 +136,14 @@ args:
         name: smpl
     render:
       module: myeasymocap.io.vis3d.Render
+      skip: True
       key_from_data: [cameras, imgnames]
       key_from_previous: [params, body_model]
       args:
         backend: pyrender
     make_video:
       module: myeasymocap.io.video.MakeVideo
+      skip: True
       args:
         fps: 30
         keep_image: False
