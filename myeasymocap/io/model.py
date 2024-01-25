@@ -7,7 +7,8 @@ from easymocap.mytools.debug_utils import log
 
 def try_to_download_SMPL(model_dir):
     cmd = 'wget https://www.dropbox.com/s/aeulffqzb3zmh8x/pare-github-data.zip'
-    os.system(cmd)
+	print("skip download https://www.dropbox.com/s/aeulffqzb3zmh8x/pare-github-data.zip")
+    #os.system(cmd)
     os.makedirs(model_dir, exist_ok=True)
     cmd = 'unzip pare-github-data.zip -d {}'.format(model_dir)
     print('[RUN] {}'.format(cmd))
