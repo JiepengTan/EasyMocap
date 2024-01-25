@@ -1,0 +1,7 @@
+module: easymocap.bodymodel.smpl.SMPLModel
+args:
+  model_path: models/pare/data/body_models/smpl/SMPL_NEUTRAL.pkl
+  regressor_path: models/J_regressor_body25.npy
+  device: cuda
+  model_type: smpl
+  NUM_SHAPES: 10

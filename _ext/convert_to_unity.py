@@ -1,4 +1,3 @@
-# 安装 smplx
 
 import os
 import json

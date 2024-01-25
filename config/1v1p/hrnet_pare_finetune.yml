@@ -134,6 +134,7 @@ args:
       key_from_previous: [params, model]
       args:
         name: smpl
+        write_vertices: True
     render:
       module: myeasymocap.io.vis3d.Render
       skip: True
