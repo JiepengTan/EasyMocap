@@ -117,6 +117,7 @@ class MultiStage:
 			# 打印 当前阶段，方便观察进度
             log("final: "+key + " "  )
             if self._at_final[key].get('skip', False):
+                log("skip " + key)
                 continue
             # 原理和step类似，将各个模块的输出进行传递，达到串联的目的
             for iter_ in range(self._at_final[key].get('repeat', 1)):

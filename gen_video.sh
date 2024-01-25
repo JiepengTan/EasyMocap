@@ -25,7 +25,6 @@ python3 apps/preprocess/extract_keypoints.py ${data} --mode feetcrop --openpose 
 PYOPENGL_PLATFORM=osmesa emc --data config/datasets/svimage.yml --exp config/1v1p/hrnet_pare_finetune.yml --root ${data} --ranges 0 500 1 --subs ${videoname}
 
 echo "结束时间：$(date "+%H:%M:%S")"
-# 压缩文件
 zip -r ouput.zip ./output > /dev/null 2>&1
 
 
