@@ -1,0 +1,1 @@
+python3 apps/postprocess/write_vertices.py ./output/sv1p/smpl ./output/sv1p/k3d --cfg_model ./_ext/config/tool/export_mesh.yml --mode keypoints
