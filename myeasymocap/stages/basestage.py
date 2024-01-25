@@ -20,7 +20,8 @@ class Timer:
                 contents.append('skip')
             else:
                 contents.append('{:.3f}s'.format(timer[key]))
-        print(tabulate(headers=self.header, tabular_data=[contents], tablefmt='fancy_grid'))
+		# 跳过打印，日志太长
+        #print(tabulate(headers=self.header, tabular_data=[contents], tablefmt='fancy_grid'))
 
 class MultiStage:
     def load_final(self):
@@ -59,19 +60,24 @@ class MultiStage:
         ret = {}
         if 'meta' in data:
             ret['meta'] = data['meta']
+        # 全局的保持一致的数据 一般 none
         for key in self.keys_keep:
             ret[key] = data[key]
         timer = {}
         for key, model in self.model_steps.items():
+            # 当前步骤 希望保持一致的数据
             for k in self._at_step[key].get('key_keep', []):
                 ret[k] = data[k]
+            # 跳过
             if self._at_step[key].get('skip', False):
                 continue
+            # 输入
             inputs = {}
             for k in self._at_step[key].get('key_from_data', []):
                 inputs[k] = data[k]
             for k in self._at_step[key].get('key_from_previous', []):
-                inputs[k] = ret[k]
+                # 从当前step 中的前面的模块中获取值，方便将不同的Module进行串联，比如上一个module的的指定输出 传递到下一模块中
+                inputs[k] = ret[k] 
             start = time.time()
             try:
                 output = model(**inputs)
@@ -80,8 +86,9 @@ class MultiStage:
                 raise Exception
             timer[key] = time.time() - start
             if output is not None:
-                ret.update(output)
+                ret.update(output) # 更新输出到总输出池中
 
+        # 打印各个Module 的耗时
         self.timer.update(timer)
         return ret
 
@@ -107,8 +114,11 @@ class MultiStage:
         log('Keep keys: {}'.format(list(data.keys())))
         ret = {}
         for key, model in self.model_finals.items():
+			# 打印 当前阶段，方便观察进度
+            log("final: "+key + " "  )
             if self._at_final[key].get('skip', False):
                 continue
+            # 原理和step类似，将各个模块的输出进行传递，达到串联的目的
             for iter_ in range(self._at_final[key].get('repeat', 1)):
                 inputs = {}
                 model.iter = iter_
