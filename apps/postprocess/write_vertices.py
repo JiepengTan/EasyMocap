@@ -57,6 +57,7 @@ def main(inp, out, body_model):
             for i, data in enumerate(params):
                 output.append({
                     'id': data['id'],
+                    'type': 'joint',
                     'keypoints3d': smpljoints[i]
                 })
         basename = filename.replace(inp+'/', '')
