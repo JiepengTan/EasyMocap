@@ -5,7 +5,7 @@ import json
 
 # Define input and output directories
 input_dir = './output/sv1p/smpl/'
-output_dir = './output/sv1p/joint_rot/'
+output_dir = './output/sv1p/rot3x3/'
 
 def process_smpl_data(data):
     # 全局旋转和平移
@@ -39,7 +39,7 @@ for filename in os.listdir(input_dir):
         for data in params_list:
             rotation_matrices,Rh, Th, shapes = process_smpl_data(data)
             for i, rotation_matrix in enumerate(rotation_matrices):
-                result_list['rot3x3'].append(rotation_matrix)
+                result_list['rot3x3'].append(rotation_matrix.flatten().tolist())
 
         # Save the results to a new JSON file
         with open(os.path.join(output_dir, filename), 'w') as f:
